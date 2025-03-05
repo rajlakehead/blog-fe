@@ -24,12 +24,11 @@ import { apiService, Post } from '../services/apiService';
 
 interface PostPageProps {
   isAuthenticated?: boolean;
-  currentUserId?: string;
 }
 
 const PostPage: React.FC<PostPageProps> = ({ 
   isAuthenticated,
-  currentUserId
+  
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
