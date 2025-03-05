@@ -51,7 +51,6 @@ export interface UpdatePostRequest extends CreatePostRequest {
   id: string;
 }
 
-
 export interface ApiError {
   status: number;
   message: string;
@@ -71,11 +70,14 @@ class ApiService {
   private static instance: ApiService;
 
   private constructor() {
+    // Use the environment variable to set the base URL
+    const baseURL = 'https://blag-t8mj.onrender.com/api/v1/'; // Fallback to '/api/v1' if not defined
+
     this.api = axios.create({
-      baseURL: '/api/v1',
+      baseURL,
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
 
     // Add request interceptor for authentication
@@ -118,7 +120,7 @@ class ApiService {
     }
     return {
       status: 500,
-      message: 'An unexpected error occurred'
+      message: 'An unexpected error occurred',
     };
   }
 
@@ -134,10 +136,7 @@ class ApiService {
   }
 
   // Posts endpoints
-  public async getPosts(params: {
-    categoryId?: string;
-    tagId?: string;
-  }): Promise<Post[]> {
+  public async getPosts(params: { categoryId?: string; tagId?: string }): Promise<Post[]> {
     const response: AxiosResponse<Post[]> = await this.api.get('/posts', { params });
     return response.data;
   }
@@ -161,11 +160,7 @@ class ApiService {
     await this.api.delete(`/posts/${id}`);
   }
 
-  public async getDrafts(params: {
-    page?: number;
-    size?: number;
-    sort?: string;
-  }): Promise<Post[]> {
+  public async getDrafts(params: { page?: number; size?: number; sort?: string }): Promise<Post[]> {
     const response: AxiosResponse<Post[]> = await this.api.get('/posts/drafts', { params });
     return response.data;
   }
