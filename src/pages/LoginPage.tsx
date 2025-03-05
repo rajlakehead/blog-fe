@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../components/AuthContext';
+import { apiService } from '../services/apiService';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +8,6 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +15,7 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      login(email, password);
+      await apiService.login({ email, password });
       navigate('/');
     } catch (err: any) {
       setError(err.message || 'Failed to login. Please try again.');
