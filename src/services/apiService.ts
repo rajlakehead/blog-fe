@@ -71,7 +71,7 @@ class ApiService {
 
   private constructor() {
     // Use the environment variable to set the base URL
-    const baseURL = 'https://blag-t8mj.onrender.com/api/v1/'; // Fallback to '/api/v1' if not defined
+    const baseURL = 'https://blag-t8mj.onrender.com/api/v1'; // Fallback to '/api/v1' if not defined
 
     this.api = axios.create({
       baseURL,
